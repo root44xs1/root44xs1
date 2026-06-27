@@ -13,6 +13,7 @@
             --text-muted: #8a96a3;
             --border-color: #2d3845;
             --input-bg: #0d1115;
+            --btn-secondary: #242f3a;
         }
 
         body { 
@@ -88,7 +89,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: background 0.2s, transform 0.1s;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         button:hover { 
@@ -97,6 +98,22 @@
         
         button:active {
             transform: scale(0.98);
+        }
+
+        .btn-gen {
+            background: var(--btn-secondary);
+            color: var(--text-color);
+            padding: 8px 12px;
+            font-size: 12px;
+            margin-bottom: 8px;
+            width: auto;
+            display: inline-block;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-gen:hover {
+            background: var(--border-color);
+            color: var(--accent-color);
         }
 
         h3 { 
@@ -209,9 +226,10 @@
         </div>
 
         <h3>3. Bot Names List</h3>
-        <div class="group">
+        <div class="group" style="margin-bottom: 5px;">
             <label>Format: TemplateName, BotName (One per line)</label>
-            <textarea id="botList" rows="6">EliteSniper, Alpha_ROOT
+            <button type="button" class="btn-gen" onclick="generateRandomNames()">🎲 Auto-Generate Names</button>
+            <textarea id="botList" rows="8">EliteSniper, Alpha_ROOT
 Rusher, Bravo_ROOT
 EliteSniper, Charlie_ROOT
 Rusher, Delta_ROOT</textarea>
@@ -226,52 +244,46 @@ Rusher, Delta_ROOT</textarea>
 </div>
 
 <script>
+function generateRandomNames() {
+    const baseNames = [
+        "Spike", "Neo", "Morphius", "HeX", "Viper", "Raptor", "Slayer", "Giga", "Bullet", 
+        "Hunter", "Trooper", "Rogue", "Shadow", "Phoenix", "Titan", "Cyclops", "Blitz", 
+        "Crusher", "Maverick", "Ace", "Gunner", "Trigger", "Zero", "Frost", "Reaper"
+    ];
+    const tags = ["[ROOT44x]", "*ROOT*", "R44x|", "css_", "PRO_"];
+    const templates = ["EliteSniper", "Rusher"];
+    
+    let generatedLines = [];
+    
+    for (let i = 0; i < 12; i++) {
+        const randTemplate = templates[Math.floor(Math.random() * templates.length)];
+        const randName = baseNames[Math.floor(Math.random() * baseNames.length)];
+        const useTag = Math.random() > 0.4;
+        
+        let finalName = randName;
+        if (useTag) {
+            const randTag = tags[Math.floor(Math.random() * tags.length)];
+            finalName = Math.random() > 0.5 ? randTag + finalName : finalName + "_" + randTag.replace(/[^a-zA-Z0-9]/g, '');
+        } else {
+            finalName += "_" + Math.floor(Math.random() * 99);
+        }
+        
+        generatedLines.push(`${randTemplate}, ${finalName}`);
+    }
+    
+    document.getElementById('botList').value = generatedLines.join('\n');
+}
+
 function generateProfile() {
     let fileContent = "// Custom Counter-Strike 1.6 Bot Profile\n";
     fileContent += "// Created using Bot Profile Maker by ROOT44x\n\n";
     
     fileContent += "WeaponPreference\n  Default\n    m4a1, ak47, mp5, deagle\n  End\nEnd\n\n";
     
-    // -- ELITE TEMPLATE GENERATION --
+    // -- ELITE TEMPLATE --
     const eWeapons = document.getElementById('eliteWeapons').value.replace(/[^a-zA-Z0-9,\s]/g, '');
     const eSkill = parseInt(document.getElementById('eliteSkill').value) || 100;
     const eAggr = parseInt(document.getElementById('eliteAggression').value) || 95;
     const eReact = parseFloat(document.getElementById('eliteReaction').value) || 0.12;
     const eVoice = parseInt(document.getElementById('eliteVoice').value) || 85;
-    const eTeam = document.getElementById('eliteTeam').value;
-    const eSkin = parseInt(document.getElementById('eliteSkin').value) || 0;
-    
-    fileContent += "Template EliteSniper\n";
-    fileContent += `  WeaponPreference = ${eWeapons}\n`;
-    fileContent += `  Skill = ${eSkill}\n`;
-    fileContent += `  Aggression = ${eAggr}\n`;
-    fileContent += `  ReactionTime = ${eReact}\n`;
-    fileContent += `  VoicePitch = ${eVoice}\n`;
-    if(eTeam !== "ANY") fileContent += `  Team = ${eTeam}\n`;
-    if(eSkin > 0) fileContent += `  Skin = ${eSkin}\n`;
-    fileContent += "End\n\n";
-    
-    // -- RUSHER TEMPLATE GENERATION --
-    const rWeapons = document.getElementById('rusherWeapons').value.replace(/[^a-zA-Z0-9,\s]/g, '');
-    const rSkill = parseInt(document.getElementById('rusherSkill').value) || 80;
-    const rAggr = parseInt(document.getElementById('rusherAggression').value) || 100;
-    const rReact = parseFloat(document.getElementById('rusherReaction').value) || 0.22;
-    const rVoice = parseInt(document.getElementById('rusherVoice').value) || 115;
-    const rTeam = document.getElementById('rusherTeam').value;
-    const rSkin = parseInt(document.getElementById('rusherSkin').value) || 0;
-    
-    fileContent += "Template Rusher\n";
-    fileContent += `  WeaponPreference = ${rWeapons}\n`;
-    fileContent += `  Skill = ${rSkill}\n`;
-    fileContent += `  Aggression = ${rAggr}\n`;
-    fileContent += `  ReactionTime = ${rReact}\n`;
-    fileContent += `  VoicePitch = ${rVoice}\n`;
-    if(rTeam !== "ANY") fileContent += `  Team = ${rTeam}\n`;
-    if(rSkin > 0) fileContent += `  Skin = ${rSkin}\n`;
-    fileContent += "End\n\n";
-    
-    // -- PARSE INDIVIDUAL BOTS --
-    const lines = document.getElementById('botList').value.split('\n');
-    lines.forEach(line => {
-        const trimmed = line.trim();
-        if (!trimmed) return;
+Pripazite na kôd.const eTeam = document.getElementById('eliteTeam').value;const eSkin = parseInt(document.getElementById('eliteSkin').value) || 0;fileContent += "Template EliteSniper\n";fileContent +=   WeaponPreference = ${eWeapons}\n;fileContent +=   Skill = ${eSkill}\n;fileContent +=   Aggression = ${eAggr}\n;fileContent +=   ReactionTime = ${eReact}\n;fileContent +=   VoicePitch = ${eVoice}\n;if(eTeam !== "ANY") fileContent +=   Team = ${eTeam}\n;if(eSkin > 0) fileContent +=   Skin = ${eSkin}\n;fileContent += "End\n\n";// -- RUSHER TEMPLATE --const rWeapons = document.getElementById('rusherWeapons').value.replace(/[^a-zA-Z0-9,\s]/g, '');const rSkill = parseInt(document.getElementById('rusherSkill').value) || 80;const rAggr = parseInt(document.getElementById('rusherAggression').value) || 100;const rReact = parseFloat(document.getElementById('rusherReaction').value) || 0.22;const rVoice = parseInt(document.getElementById('rusherVoice').value) || 115;const rTeam = document.getElementById('rusherTeam').value;const rSkin = parseInt(document.getElementById('rusherSkin').value) || 0;fileContent += "Template Rusher\n";fileContent +=   WeaponPreference = ${rWeapons}\n;fileContent +=   Skill = ${rSkill}\n;fileContent +=   Aggression = ${rAggr}\n;fileContent +=   ReactionTime = ${rReact}\n;fileContent +=   VoicePitch = ${rVoice}\n;if(rTeam !== "ANY") fileContent +=   Team = ${rTeam}\n;if(rSkin > 0) fileContent +=   Skin = ${rSkin}\n;fileContent += "End\n\n";// -- BOT LINES PARSING --const lines = document.getElementById('botList').value.split('\n');lines.forEach(line => {const trimmed = line.trim();if (!trimmed) return;const parts = trimmed.split(',');if (parts.length === 2) {const template = parts[0].trim().replace(/[^a-zA-Z0-9]/g, '');const name = parts[1].trim().replace(/[^a-zA-Z0-9_|[]*]/g, '');fileContent += ${template} ${name}\n;}});// -- BROWSER DOWNLOAD EXECUTION --const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });const link = document.createElement('a');link.href = URL.createObjectURL(blob);link.download = "BotProfile.db";link.click();URL.revokeObjectURL(link.href);}
