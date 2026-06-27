@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8"><title>CS 1.6 Bot Maker | by ROOT44x</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 30px auto; padding: 20px; background: #12161a; color: #e1e7ed; }
-        .card { background: #1a2129; padding: 25px; border-radius: 8px; border: 1px solid #2d3845; }
-        h2, h3 { color: #de9b35; text-transform: uppercase; margin-top: 20px; }
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 15px; background: #12161a; color: #e1e7ed; }
+        .card { background: #1a2129; padding: 20px; border-radius: 8px; border: 1px solid #2d3845; }
+        h2, h3 { color: #de9b35; text-transform: uppercase; margin: 15px 0 10px 0; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, select, textarea { width: 100%; padding: 8px; box-sizing: border-box; background: #0d1115; border: 1px solid #2d3845; color: #e1e7ed; border-radius: 4px; margin-bottom: 10px; }
+        .row { display: flex; align-items: center; background: #0d1115; border: 1px solid #2d3845; border-radius: 4px; margin-bottom: 8px; overflow: hidden; }
+        .row span { padding-left: 8px; font-size: 12px; color: #8a96a3; min-width: 65px; }
+        input, select, textarea { width: 100%; padding: 8px; box-sizing: border-box; background: #0d1115; border: 1px solid #2d3845; color: #e1e7ed; border-radius: 4px; margin-bottom: 8px; }
+        .row input { border: none; margin-bottom: 0; }
+        .btn-step { background: #242f3a; color: #e1e7ed; border: none; padding: 8px 12px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .btn-step:hover { background: #2d3845; color: #de9b35; }
         button { background: #de9b35; color: #000; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase; }
         .btn-gen { background: #242f3a; color: #e1e7ed; width: auto; padding: 6px 12px; font-size: 12px; margin-bottom: 5px; }
         .credit { text-align: center; margin-top: 20px; font-size: 12px; color: #8a96a3; }
@@ -21,68 +26,69 @@
         <h3>1. Elite Template</h3>
         <input type="text" id="eliteWeapons" value="awp, deagle, scout, m4a1, ak47">
         <div class="grid">
-            <input type="number" id="eliteSkill" value="100" placeholder="Skill">
-            <input type="number" id="eliteAggression" value="95" placeholder="Aggression">
-            <input type="text" id="eliteReaction" value="0.12" placeholder="Reaction Time">
-            <input type="number" id="eliteVoice" value="85" placeholder="Voice Pitch">
+            <div class="row"><span>Skill:</span><button type="button" class="btn-step" onclick="step('eliteSkill',-5)">-</button><input type="number" id="eliteSkill" value="100"><button type="button" class="btn-step" onclick="step('eliteSkill',5)">+</button></div>
+            <div class="row"><span>Aggr:</span><button type="button" class="btn-step" onclick="step('eliteAggression',-5)">-</button><input type="number" id="eliteAggression" value="95"><button type="button" class="btn-step" onclick="step('eliteAggression',5)">+</button></div>
+            <div class="row"><span>React:</span><input type="text" id="eliteReaction" value="0.12"></div>
+            <div class="row"><span>Pitch:</span><button type="button" class="btn-step" onclick="step('eliteVoice',-5)">-</button><input type="number" id="eliteVoice" value="85"><button type="button" class="btn-step" onclick="step('eliteVoice',5)">+</button></div>
             <select id="eliteTeam"><option value="ANY">Any Team</option><option value="CT">CT</option><option value="T">T</option></select>
             <input type="number" id="eliteSkin" value="0" placeholder="Skin (0-4)">
         </div>
+
         <h3>2. Rusher Template</h3>
         <input type="text" id="rusherWeapons" value="ak47, m4a1, mac10, mp5">
         <div class="grid">
-            <input type="number" id="rusherSkill" value="80" placeholder="Skill">
-            <input type="number" id="rusherAggression" value="100" placeholder="Aggression">
-            <input type="text" id="rusherReaction" value="0.22" placeholder="Reaction Time">
-            <input type="number" id="rusherVoice" value="115" placeholder="Voice Pitch">
+            <div class="row"><span>Skill:</span><button type="button" class="btn-step" onclick="step('rusherSkill',-5)">-</button><input type="number" id="rusherSkill" value="80"><button type="button" class="btn-step" onclick="step('rusherSkill',5)">+</button></div>
+            <div class="row"><span>Aggr:</span><button type="button" class="btn-step" onclick="step('rusherAggression',-5)">-</button><input type="number" id="rusherAggression" value="100"><button type="button" class="btn-step" onclick="step('rusherAggression',5)">+</button></div>
+            <div class="row"><span>React:</span><input type="text" id="rusherReaction" value="0.22"></div>
+            <div class="row"><span>Pitch:</span><button type="button" class="btn-step" onclick="step('rusherVoice',-5)">-</button><input type="number" id="rusherVoice" value="115"><button type="button" class="btn-step" onclick="step('rusherVoice',5)">+</button></div>
             <select id="rusherTeam"><option value="ANY">Any Team</option><option value="CT">CT</option><option value="T">T</option></select>
             <input type="number" id="rusherSkin" value="0" placeholder="Skin (0-4)">
         </div>
+
         <h3>3. Bot Names List</h3>
         <button type="button" class="btn-gen" onclick="genNames()">🎲 Auto-Generate Names</button>
-        <textarea id="botList" rows="6">EliteSniper, Alpha_ROOT&#10;Rusher, Bravo_ROOT&#10;EliteSniper, Charlie_ROOT</textarea>
+        <textarea id="botList" rows="6">EliteSniper, Alpha&#10;Rusher, Bravo&#10;EliteSniper, Charlie</textarea>
         <button type="button" onclick="buildFile()">Generate & Download BotProfile.db</button>
     </form>
     <div class="credit">Application developed by <strong>ROOT44x</strong></div>
 </div>
 <script>
+function step(id, val) {
+    let el = document.getElementById(id);
+    let curr = parseInt(el.value) || 0;
+    el.value = Math.max(0, curr + val);
+}
 function genNames() {
-    const names = ["Spike", "Neo", "Viper", "Raptor", "Slayer", "Shadow", "Phoenix", "Titan", "Blitz", "Ace"];
-    const tags = ["[ROOT44x]", "*ROOT*", "R44x|"];
+    const names = ["Spike", "Neo", "Viper", "Raptor", "Slayer", "Shadow", "Phoenix", "Titan", "Blitz", "Ace", "Hunter", "Gunner", "Trigger", "Zero"];
+    const tags = ["PRO_", "css_", "Clan_", "xX_", "Local_"];
     let out = [];
     for(let i=0; i<10; i++) {
         let t = Math.random() > 0.5 ? "EliteSniper" : "Rusher";
-        let n = names[Math.floor(Math.random()*names.length)] + "_" + Math.floor(Math.random()*99);
-        if(Math.random() > 0.5) n = tags[Math.floor(Math.random()*tags.length)] + n;
+        let n = names[Math.floor(Math.random()*names.length)];
+        if(Math.random() > 0.5) {
+            n = tags[Math.floor(Math.random()*tags.length)] + n;
+        } else {
+            n += "_" + Math.floor(Math.random()*99);
+        }
         out.push(t + ", " + n);
     }
     document.getElementById('botList').value = out.join('\n');
 }
 function buildFile() {
     let txt = "// Custom Bot Profile\n// Created by ROOT44x\n\nWeaponPreference\n  Default\n    m4a1, ak47, mp5, deagle\n  End\nEnd\n\n";
-    
-    // Elite
-    txt += "Template EliteSniper\n  WeaponPreference = " + document.getElementById('eliteWeapons').value + "\n";
-    txt += "  Skill = " + document.getElementById('eliteSkill').value + "\n  Aggression = " + document.getElementById('eliteAggression').value + "\n";
-    txt += "  ReactionTime = " + document.getElementById('eliteReaction').value + "\n  VoicePitch = " + document.getElementById('eliteVoice').value + "\n";
-    if(document.getElementById('eliteTeam').value !== "ANY") txt += "  Team = " + document.getElementById('eliteTeam').value + "\n";
-    if(parseInt(document.getElementById('eliteSkin').value) > 0) txt += "  Skin = " + document.getElementById('eliteSkin').value + "\n";
-    txt += "End\n\n";
-
-    // Rusher
-    txt += "Template Rusher\n  WeaponPreference = " + document.getElementById('rusherWeapons').value + "\n";
-    txt += "  Skill = " + document.getElementById('rusherSkill').value + "\n  Aggression = " + document.getElementById('rusherAggression').value + "\n";
-    txt += "  ReactionTime = " + document.getElementById('rusherReaction').value + "\n  VoicePitch = " + document.getElementById('rusherVoice').value + "\n";
-    if(document.getElementById('rusherTeam').value !== "ANY") txt += "  Team = " + document.getElementById('rusherTeam').value + "\n";
-    if(parseInt(document.getElementById('rusherSkin').value) > 0) txt += "  Skin = " + document.getElementById('rusherSkin').value + "\n";
-    txt += "End\n\n";
-
-    // Bots
+    ["elite", "rusher"].forEach(t => {
+        let cap = t === "elite" ? "EliteSniper" : "Rusher";
+        txt += "Template " + cap + "\n  WeaponPreference = " + document.getElementById(t+'Weapons').value + "\n";
+        txt += "  Skill = " + document.getElementById(t+'Skill').value + "\n  Aggression = " + document.getElementById(t+'Aggression').value + "\n";
+        txt += "  ReactionTime = " + document.getElementById(t+'Reaction').value + "\n  VoicePitch = " + document.getElementById(t+'Voice').value + "\n";
+        if(document.getElementById(t+'Team').value !== "ANY") txt += "  Team = " + document.getElementById(t+'Team').value + "\n";
+        if(parseInt(document.getElementById(t+'Skin').value) > 0) txt += "  Skin = " + document.getElementById(t+'Skin').value + "\n";
+        txt += "End\n\n";
+    });
     document.getElementById('botList').value.split('\n').forEach(l => {
         let p = l.split(',');
         if(p.length === 2) txt += p[0].trim() + " " + p[1].trim() + "\n";
     });
-
     let blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
     let a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
