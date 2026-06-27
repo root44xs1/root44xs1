@@ -3,127 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS 1.6 Bot Profile Maker</title>
+    <title>CS 1.6 Bot Profile Maker | by ROOT44x</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f4f4f9; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input[type="text"], input[type="number"], textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { background: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
-        button:hover { background: #0056b3; }
-        h3 { border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 25px; }
+        :root {
+            --bg-color: #12161a;
+            --card-bg: #1a2129;
+            --accent-color: #de9b35; /* CS Gold */
+            --text-color: #e1e7ed;
+            --text-muted: #8a96a3;
+            --border-color: #2d3845;
+            --input-bg: #0d1115;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 700px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+            background: var(--bg-color); 
+            color: var(--text-color);
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            padding: 30px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4); 
+        }
+
+        header h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .group { margin-bottom: 18px; }
+        
+        label { 
+            display: block; 
+            font-weight: 600; 
+            margin-bottom: 6px; 
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        input[type="text"], input[type="number"], select, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button { 
+            background: var(--accent-color); 
+            color: #000; 
+            padding: 14px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+            width: 100%; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 15px;
+        }
+
+        button:hover { 
+            background: #f5b34d; 
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+
+        h3 { 
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 5px; 
+            margin-top: 30px; 
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .credit {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .credit strong {
+            color: var(--accent-color);
+        }
     </style>
 </head>
 <body>
 <div class="card">
-    <h2>CS 1.6 Bot Profile Maker</h2>
+    <header>
+        <h2>CS 1.6 Bot Profile Maker</h2>
+    </header>
     
     <form id="botForm">
         <h3>1. Configure Elite Template</h3>
         <div class="group">
             <label>Weapons (comma separated):</label>
-            <input type="text" id="eliteWeapons" value="awp, deagle, scout">
+            <input type="text" id="eliteWeapons" value="awp, deagle, scout, m4a1, ak47">
         </div>
-        <div class="group">
-            <label>Skill Level (0 - 100):</label>
-            <input type="number" id="eliteSkill" value="100">
+        <div class="grid-2">
+            <div class="group">
+                <label>Skill Level (0 - 100):</label>
+                <input type="number" id="eliteSkill" value="100" min="0" max="100">
+            </div>
+            <div class="group">
+                <label>Aggression (0 - 100):</label>
+                <input type="number" id="eliteAggression" value="95" min="0" max="100">
+            </div>
         </div>
-        <div class="group">
-            <label>Aggression (0 - 100):</label>
-            <input type="number" id="eliteAggression" value="90">
+        <div class="grid-2">
+            <div class="group">
+                <label>Reaction Time (seconds):</label>
+                <input type="text" id="eliteReaction" value="0.12">
+            </div>
+            <div class="group">
+                <label>Voice Pitch (60 - 140):</label>
+                <input type="number" id="eliteVoice" value="85" min="60" max="140">
+            </div>
         </div>
-        <div class="group">
-            <label>Reaction Time (seconds):</label>
-            <input type="text" id="eliteReaction" value="0.15">
+        <div class="grid-2">
+            <div class="group">
+                <label>Team Preference:</label>
+                <select id="eliteTeam">
+                    <option value="ANY">Any (Default)</option>
+                    <option value="CT">Counter-Terrorists</option>
+                    <option value="T">Terrorists</option>
+                </select>
+            </div>
+            <div class="group">
+                <label>Skin / Model Preference:</label>
+                <input type="number" id="eliteSkin" value="0" min="0" max="4" placeholder="0 = Random">
+            </div>
         </div>
 
         <h3>2. Configure Rusher Template</h3>
         <div class="group">
             <label>Weapons (comma separated):</label>
-            <input type="text" id="rusherWeapons" value="ak47, m4a1, mac10">
+            <input type="text" id="rusherWeapons" value="ak47, m4a1, mac10, mp5, xm1014">
         </div>
-        <div class="group">
-            <label>Skill Level (0 - 100):</label>
-            <input type="number" id="rusherSkill" value="80">
+        <div class="grid-2">
+            <div class="group">
+                <label>Skill Level (0 - 100):</label>
+                <input type="number" id="rusherSkill" value="80" min="0" max="100">
+            </div>
+            <div class="group">
+                <label>Aggression (0 - 100):</label>
+                <input type="number" id="rusherAggression" value="100" min="0" max="100">
+            </div>
         </div>
-        <div class="group">
-            <label>Aggression (0 - 100):</label>
-            <input type="number" id="rusherAggression" value="95">
+        <div class="grid-2">
+            <div class="group">
+                <label>Reaction Time (seconds):</label>
+                <input type="text" id="rusherReaction" value="0.22">
+            </div>
+            <div class="group">
+                <label>Voice Pitch (60 - 140):</label>
+                <input type="number" id="rusherVoice" value="115" min="60" max="140">
+            </div>
         </div>
-        <div class="group">
-            <label>Reaction Time (seconds):</label>
-            <input type="text" id="rusherReaction" value="0.25">
+        <div class="grid-2">
+            <div class="group">
+                <label>Team Preference:</label>
+                <select id="rusherTeam">
+                    <option value="ANY">Any (Default)</option>
+                    <option value="CT">Counter-Terrorists</option>
+                    <option value="T">Terrorists</option>
+                </select>
+            </div>
+            <div class="group">
+                <label>Skin / Model Preference:</label>
+                <input type="number" id="rusherSkin" value="0" min="0" max="4" placeholder="0 = Random">
+            </div>
         </div>
 
         <h3>3. Bot Names List</h3>
         <div class="group">
             <label>Format: TemplateName, BotName (One per line)</label>
-            <textarea id="botList" rows="6">EliteSniper, Alpha
-Rusher, Bravo
-EliteSniper, Charlie
-Rusher, Delta</textarea>
+            <textarea id="botList" rows="6">EliteSniper, Alpha_ROOT
+Rusher, Bravo_ROOT
+EliteSniper, Charlie_ROOT
+Rusher, Delta_ROOT</textarea>
         </div>
 
         <button type="button" onclick="generateProfile()">Generate & Download BotProfile.db</button>
     </form>
+
+    <div class="credit">
+        Application developed by <strong>ROOT44x</strong>
+    </div>
 </div>
 
 <script>
 function generateProfile() {
-    // 1. Build the header structure
     let fileContent = "// Custom Counter-Strike 1.6 Bot Profile\n";
-    fileContent += "// Generated via HTML5 Browser Interface\n\n";
+    fileContent += "// Created using Bot Profile Maker by ROOT44x\n\n";
     
     fileContent += "WeaponPreference\n  Default\n    m4a1, ak47, mp5, deagle\n  End\nEnd\n\n";
     
-    // 2. Fetch template inputs and format safe strings
+    // -- ELITE TEMPLATE GENERATION --
     const eWeapons = document.getElementById('eliteWeapons').value.replace(/[^a-zA-Z0-9,\s]/g, '');
     const eSkill = parseInt(document.getElementById('eliteSkill').value) || 100;
-    const eAggr = parseInt(document.getElementById('eliteAggression').value) || 90;
-    const eReact = parseFloat(document.getElementById('eliteReaction').value) || 0.15;
+    const eAggr = parseInt(document.getElementById('eliteAggression').value) || 95;
+    const eReact = parseFloat(document.getElementById('eliteReaction').value) || 0.12;
+    const eVoice = parseInt(document.getElementById('eliteVoice').value) || 85;
+    const eTeam = document.getElementById('eliteTeam').value;
+    const eSkin = parseInt(document.getElementById('eliteSkin').value) || 0;
     
     fileContent += "Template EliteSniper\n";
     fileContent += `  WeaponPreference = ${eWeapons}\n`;
     fileContent += `  Skill = ${eSkill}\n`;
     fileContent += `  Aggression = ${eAggr}\n`;
     fileContent += `  ReactionTime = ${eReact}\n`;
-    fileContent += "  VoicePitch = 100\nEnd\n\n";
+    fileContent += `  VoicePitch = ${eVoice}\n`;
+    if(eTeam !== "ANY") fileContent += `  Team = ${eTeam}\n`;
+    if(eSkin > 0) fileContent += `  Skin = ${eSkin}\n`;
+    fileContent += "End\n\n";
     
+    // -- RUSHER TEMPLATE GENERATION --
     const rWeapons = document.getElementById('rusherWeapons').value.replace(/[^a-zA-Z0-9,\s]/g, '');
     const rSkill = parseInt(document.getElementById('rusherSkill').value) || 80;
-    const rAggr = parseInt(document.getElementById('rusherAggression').value) || 95;
-    const rReact = parseFloat(document.getElementById('rusherReaction').value) || 0.25;
+    const rAggr = parseInt(document.getElementById('rusherAggression').value) || 100;
+    const rReact = parseFloat(document.getElementById('rusherReaction').value) || 0.22;
+    const rVoice = parseInt(document.getElementById('rusherVoice').value) || 115;
+    const rTeam = document.getElementById('rusherTeam').value;
+    const rSkin = parseInt(document.getElementById('rusherSkin').value) || 0;
     
     fileContent += "Template Rusher\n";
     fileContent += `  WeaponPreference = ${rWeapons}\n`;
     fileContent += `  Skill = ${rSkill}\n`;
     fileContent += `  Aggression = ${rAggr}\n`;
     fileContent += `  ReactionTime = ${rReact}\n`;
-    fileContent += "  VoicePitch = 100\nEnd\n\n";
+    fileContent += `  VoicePitch = ${rVoice}\n`;
+    if(rTeam !== "ANY") fileContent += `  Team = ${rTeam}\n`;
+    if(rSkin > 0) fileContent += `  Skin = ${rSkin}\n`;
+    fileContent += "End\n\n";
     
-    // 3. Parse individual bot entries
+    // -- PARSE INDIVIDUAL BOTS --
     const lines = document.getElementById('botList').value.split('\n');
     lines.forEach(line => {
         const trimmed = line.trim();
         if (!trimmed) return;
-        
-        const parts = trimmed.split(',');
-        if (parts.length === 2) {
-            const template = parts[0].trim().replace(/[^a-zA-Z0-9]/g, '');
-            const name = parts[1].trim().replace(/[^a-zA-Z0-9_]/g, '');
-            fileContent += `${template} ${name}\n`;
-        }
-    });
-    
-    // 4. Trigger file download inside the web browser
-    const blob = new Blob([fileContent], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = "BotProfile.db";
-    link.click();
-    URL.revokeObjectURL(link.href);
-}
-</script>
-</body>
-</html>
